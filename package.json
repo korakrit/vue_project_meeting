@@ -1,0 +1,25 @@
+{
+  "name": "vue_meeting",
+  "version": "1.0.0",
+  "description": "meeting Project",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+    "start:frontend": "cd Frontend && npm run serve",
+    "start:backend": "cd Backend && npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/korakrit/vue_project_meeting.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/korakrit/vue_project_meeting/issues"
+  },
+  "homepage": "https://github.com/korakrit/vue_project_meeting#readme",
+  "dependencies": {
+    "concurrently": "^6.0.0"
+  }
+}
