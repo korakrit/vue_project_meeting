@@ -19,7 +19,8 @@ server.use(bodyParser.json())
 
 server.post('/', [
 
-    check('firstname').not().isEmpty()
+    body('firstname').not().isEmpty(),
+    body('lastname').not().isEmpty()
     
 ], (req,res)=>{
     try {
@@ -27,7 +28,12 @@ server.post('/', [
         res.json(req.body);
     }
     catch(ex){
-        res.status(400).json({message:ex.message});
+        
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+        // return res.status(400).json( { errors: errors.array()[0].msg });
+        return res.status(400).json( { errors: errors.array() });
+        }
     }
     
 });
