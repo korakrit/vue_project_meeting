@@ -3,7 +3,11 @@ const server = express();
 const expressSession = require('express-session');
 const bodyParser = require('body-parser');
 const { body, validationResult } = require('express-validator');
+// const routes = require('./routes');
 const PORT = 3000;
+
+const connect = require("./configs/database");
+
 
 
 server.use(expressSession({
@@ -13,38 +17,13 @@ server.use(expressSession({
     cookie: { }
   }));
 
-// parse application/x-www-form-urlencoded
 server.use(bodyParser.urlencoded({ extended: false }))
 server.use(bodyParser.json())
 
-server.post('/', [
+server.use(require('./configs/middleware'));
 
-    body('firstname').not().isEmpty(),
-    body('lastname').not().isEmpty()
-    
-], (req,res)=>{
-    try {
-        validationResult(req).throw();
-        res.json(req.body);
-    }
-    catch(ex){
-        
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-        // return res.status(400).json( { errors: errors.array()[0].msg });
-        return res.status(400).json( { errors: errors.array() });
-        }
-    }
-    
-});
 
-// server.get('/s',(req,res)=>{
-//      req.session.item = 'Hello World';
-//      res.end('set session');
-
-// });
-
-// server.post('/',(req,res) => res.json(req.body));
+server.use('/api',require('./routes'));
 
 server.get('*',(req,res)=>{
     res.end(`<h1>Backend server is started. session is ${req.session.item}</h1>`);
